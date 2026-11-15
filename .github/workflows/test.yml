@@ -1,0 +1,32 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  export_vars:
+    name: Export Variables to Output
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Exporting variables to outputs."
+
+  analyze:
+    name: (All)
+    needs: [export_vars]
+    steps:
+      - run: echo "test"
+
+  frontend_ci_job:
+    name: (All)
+    needs: [export_vars]
+    steps:
+      - run: echo "Exporting variables to outputs."
+
+  preview_api_cd_job:
+    name: (Preview)
+    needs: [export_vars, analyze, frontend_ci_job]
+    steps:
+      - run: echo "Exporting variables to outputs."
