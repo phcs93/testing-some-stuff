@@ -1,0 +1,42 @@
+name: List files in stuff folders
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  discover-folders:  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: set-matrix
+        name: Discover folders
+        run: |
+          folders=$(python -c 'import json, os; print(json.dumps(sorted(entry.name for entry in os.scandir("stuff") if entry.is_dir())))')
+          echo "folders=$folders" >> "$GITHUB_OUTPUT"
+    outputs:
+      folders: ${{ steps.set-matrix.outputs.folders }}
+
+  list-files:
+    needs: discover-folders
+    if: needs.discover-folders.outputs.folders != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: ${{ fromJSON(needs.discover-folders.outputs.folders) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: List files
+        env:
+          FOLDER: ${{ matrix.folder }}
+        run: |
+          echo "Files in stuff/$FOLDER:"
+          find "stuff/$FOLDER" -maxdepth 1 -type f -printf '%f\n'
+
+  final-status:
+    needs: list-files
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "ok"
