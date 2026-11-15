@@ -15,18 +15,21 @@ jobs:
 
   analyze:
     name: (All)
+    runs-on: ubuntu-latest
     needs: [export_vars]
     steps:
       - run: echo "test"
 
   frontend_ci_job:
     name: (All)
+    runs-on: ubuntu-latest
     needs: [export_vars]
     steps:
       - run: echo "Exporting variables to outputs."
 
   preview_api_cd_job:
     name: (Preview)
+    runs-on: ubuntu-latest
     needs: [export_vars, analyze, frontend_ci_job]
     steps:
       - run: echo "Exporting variables to outputs."
