@@ -11,13 +11,45 @@ jobs:
     steps:
       - run: echo "Starting file listing sddsf"
 
-  list-folders-files:
-    name: List files in ${{ matrix.folder }}
+  list-folder1-files:
+    name: List files in folder1
     needs: start-listing
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        folder: [folder1, folder2]
+        folder: [folder1]
+    steps:
+      - uses: actions/checkout@v4
+      - name: List files
+        env:
+          FOLDER: ${{ matrix.folder }}
+        run: |
+          echo "Files in stuff/$FOLDER:"
+          find "stuff/$FOLDER" -maxdepth 1 -type f -printf '%f\n'
+
+  list-folder2-files:
+    name: List files in folder2
+    needs: start-listing
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [folder2]
+    steps:
+      - uses: actions/checkout@v4
+      - name: List files
+        env:
+          FOLDER: ${{ matrix.folder }}
+        run: |
+          echo "Files in stuff/$FOLDER:"
+          find "stuff/$FOLDER" -maxdepth 1 -type f -printf '%f\n'
+
+  list-folder3-files:
+    name: List files in folder3
+    needs: start-listing
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [folder3]
     steps:
       - uses: actions/checkout@v4
       - name: List files
