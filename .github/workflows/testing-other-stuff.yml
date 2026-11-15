@@ -1,0 +1,27 @@
+name: testing-other-stuff
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  list-files:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [folder1, folder2, folder3]
+    steps:
+      - uses: actions/checkout@v4
+      - name: List files
+        env:
+          FOLDER: ${{ matrix.folder }}
+        run: |
+          echo "Files in stuff/$FOLDER:"
+          find "stuff/$FOLDER" -maxdepth 1 -type f -printf '%f\n'
+
+  final-status:
+    needs: list-files
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "ok"
