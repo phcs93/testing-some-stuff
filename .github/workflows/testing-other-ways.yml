@@ -9,7 +9,7 @@ jobs:
   start-listing:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Starting file listing"
+      - run: echo "Starting file listing sddsf"
 
   list-folder1-files:
     needs: start-listing
