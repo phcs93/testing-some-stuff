@@ -19,7 +19,7 @@ jobs:
       matrix:
         folder: [folder1]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout
       - name: List files
         env:
           FOLDER: ${{ matrix.folder }}
@@ -35,7 +35,7 @@ jobs:
       matrix:
         folder: [folder2]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout
       - name: List files
         env:
           FOLDER: ${{ matrix.folder }}
@@ -51,7 +51,7 @@ jobs:
       matrix:
         folder: [folder3]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout
       - name: List files
         env:
           FOLDER: ${{ matrix.folder }}
@@ -63,7 +63,7 @@ jobs:
     needs: start-listing
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout
       - name: List files in folder3
         run: find stuff/folder3 -maxdepth 1 -type f -printf '%f\n'
 
